@@ -12,7 +12,7 @@
 ros::NodeHandle  nh;
 
 sensor_msgs::Range range_msg;
-ros::Publisher pub_range( "range_raw", &range_msg);
+ros::Publisher pub_range( "sensor_info", &range_msg);
 
 char frameid[] = "/ultrasound";
 
@@ -21,7 +21,7 @@ const int trigPin = 9;
 const int echoPin = 10;
 // defines variables
 long duration;
-double distanceCm, distanceInch;
+double distance_mm, distanceInch;
 
 #define USE_ROS
 
@@ -56,25 +56,31 @@ void loop() {
     duration = pulseIn(echoPin, HIGH);
 
     // Calculating the distance
-    //distanceCm = random(10, 200); //duration * 0.034 / 2;
-    distanceCm = duration * 0.034 / 2;
+    //distance_mm = random(10, 200); //duration * 0.034 / 2;
+    distance_mm = duration * 0.00034 / 2;
     //distanceInch = duration * 0.0133 / 2;
 
 #ifdef USE_ROS
 
       
-    range_msg.range = distanceCm;
+    range_msg.range = distance_mm;
+    range_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
+    range_msg.field_of_view= 0.5;
+    range_msg.min_range= 0.02;
+    range_msg.max_range= 2.0;
+    
     range_msg.header.stamp = nh.now();
+    range_msg.header.frame_id = "distance_sensor_frame";
     pub_range.publish(&range_msg);
 #else
     // Prints the distance on the Serial Monitor
-    Serial.print("Distance (cm): ");
-    Serial.println(distanceCm);
+    Serial.print("Distance (mm): ");
+    Serial.println(distance_mm);
 
     //Serial.print("Distance (inch): ");
     //Serial.println(distanceInch);
 #endif
-    publisher_timer =  millis() + 1000;
+    publisher_timer =  millis() + 100; // 0.1 sec
 
   }
   nh.spinOnce();

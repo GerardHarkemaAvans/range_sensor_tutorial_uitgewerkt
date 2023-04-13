@@ -36,10 +36,11 @@
 ## Node to subscribe the sensor information topic and print distance data.
 
 import rospy
-from range_sensor_msgs.msg import SensorInformation
+from sensor_msgs.msg import Range
+
 
 def sensorInfoCallback(data):
-    rospy.loginfo('Distance reading from the sensor is: %f', data.sensor_data.range)
+    rospy.loginfo('Distance reading from the sensor is: %f', data.range)
 
 def sensorInfoListener():
 
@@ -50,7 +51,7 @@ def sensorInfoListener():
     # run simultaneously.
     rospy.init_node('sensor_info_subscriber', anonymous=False)
 
-    rospy.Subscriber('sensor_info', SensorInformation, sensorInfoCallback)
+    rospy.Subscriber('sensor_info', Range, sensorInfoCallback)
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()

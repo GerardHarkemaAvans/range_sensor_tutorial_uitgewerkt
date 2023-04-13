@@ -8,14 +8,15 @@
 
 # All necessary python imports go here.
 import rospy
-from range_sensor_msgs.msg import SensorInformation, BoxHeightInformation
+from range_sensor_msgs.msg import BoxHeightInformation
+from sensor_msgs.msg import Range
 
 _SENSOR_CONVEYOR_BELT_DISTANCE = 2.0 # Metres -> assume that the sensor is placed 2.0 above the conveyor belt
 _SENSOR_USABLE_RANGE = 1.9 # Metres -> Usable sensor range, accordingly datasheet
 
 def sensor_info_callback(data, bhi_pub):
 
-    box_distance = data.sensor_data.range
+    box_distance = data.range
 
     # Compute the height of the box.
     # Boxes that are detected to be shorter than 10cm are due to sensor noise.
@@ -36,7 +37,7 @@ if __name__ == '__main__':
 
     # Wait for the topic that publishes sensor information to become available - Part1
     rospy.loginfo('Waiting for topic %s to be published...', 'sensor_info')
-    rospy.wait_for_message('sensor_info', SensorInformation)
+    rospy.wait_for_message('sensor_info', Range)
     rospy.loginfo('%s topic is now available!', 'sensor_info')
 
     # Create the publisher for Part3 here
@@ -48,7 +49,7 @@ if __name__ == '__main__':
     # the action server code illustration.
 
     # Create the publisher for Part1 here
-    rospy.Subscriber('sensor_info', SensorInformation, sensor_info_callback, bhi_publisher)
+    rospy.Subscriber('sensor_info', Range, sensor_info_callback, bhi_publisher)
 
     # Prevent this code from exiting until Ctrl+C is pressed.
     rospy.spin()
