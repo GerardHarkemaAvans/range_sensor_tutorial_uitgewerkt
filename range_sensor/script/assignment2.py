@@ -4,6 +4,7 @@
 # publishes information on the box height in metres and use the metres_to_feet
 # service to convert this height in metres to height in feet.
 
+
 import rospy
 from range_sensor_msgs.msg import BoxHeightInformation
 from range_sensor_msgs.srv import ConvertMetresToFeet, ConvertMetresToFeetRequest, ConvertMetresToFeetResponse
