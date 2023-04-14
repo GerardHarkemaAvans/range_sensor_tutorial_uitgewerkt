@@ -23,6 +23,9 @@ const int echoPin = 10;
 long duration;
 double distance_mm, distanceInch;
 
+#define MAX_RANGE 1.00
+#define MIN_RANGE 0.10
+
 #define USE_ROS
 
 void setup() {
@@ -66,8 +69,11 @@ void loop() {
     range_msg.range = distance_mm;
     range_msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
     range_msg.field_of_view= 0.5;
-    range_msg.min_range= 0.02;
-    range_msg.max_range= 2.0;
+    range_msg.min_range= MIN_RANGE;
+    range_msg.max_range= MAX_RANGE;
+    range_msg.range = range_msg.range > range_msg.max_range ? range_msg.max_range : range_msg.range;
+    range_msg.range = range_msg.range < range_msg.min_range ? range_msg.min_range : range_msg.range;
+    
     
     range_msg.header.stamp = nh.now();
     range_msg.header.frame_id = "distance_sensor_frame";

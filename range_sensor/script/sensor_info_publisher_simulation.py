@@ -39,6 +39,10 @@ import rospy
 from sensor_msgs.msg import Range
 from sim_sensor_data import distSensorData as getSensorData
 
+
+MAX_RANGE = 1.00
+MIN_RANGE = 0.10
+
 def sensorInfoPublisher():
     si_publisher = rospy.Publisher('sensor_info', Range, queue_size = 10)
     rospy.init_node('sensor_info_publisher', anonymous=False)
@@ -54,8 +58,8 @@ def sensorInfoPublisher():
     # Fill in the sensor data information.
     sensor_info.radiation_type = sensor_info.ULTRASOUND
     sensor_info.field_of_view = 0.5 # Field of view of the sensor in rad.
-    sensor_info.min_range = 0.02 # Minimum distance range of the sensor in m.
-    sensor_info.max_range = 2.0 # Maximum distance range of the sensor in m.
+    sensor_info.min_range = MIN_RANGE # Minimum distance range of the sensor in m.
+    sensor_info.max_range = MAX_RANGE # Maximum distance range of the sensor in m.
 
 
     while not rospy.is_shutdown():
