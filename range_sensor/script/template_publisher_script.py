@@ -45,7 +45,7 @@ def simplePublisher():
     rate = rospy.Rate(1)
 
     # The string to be published on the topic
-    topic1_content = "Welcome to Hello (Real) World with ROS!!!"
+    topic1_content = "Welcome to the ROS Workshop!!!"
 
     while not rospy.is_shutdown():
         simple_publisher.publish(topic1_content)

@@ -11,8 +11,8 @@ import rospy
 from range_sensor_msgs.msg import BoxHeightInformation
 from sensor_msgs.msg import Range
 
-_SENSOR_CONVEYOR_BELT_DISTANCE = 1.0 # Metres -> assume that the sensor is placed 1.0 above the conveyor belt
-_SENSOR_USABLE_RANGE = 0.9 # Metres -> Usable sensor range, accordingly datasheet
+_SENSOR_CONVEYOR_BELT_DISTANCE = 2.0 # Metres -> assume that the sensor is placed 2.0 above the conveyor belt
+_SENSOR_USABLE_RANGE = 1.9 # Metres -> Usable sensor range, accordingly datasheet
 
 def sensor_info_callback(data, bhi_pub):
 
