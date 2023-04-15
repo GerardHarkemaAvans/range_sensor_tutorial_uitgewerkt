@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
 <launch>
+
+  <!-- Arguments definition -->
+  <arg name="sim"                 default="false"/>
+    
   <!-- Start the sensor info publisher node.-->
-  <node name="sensor_info" pkg="range_sensor" type="sensor_info_publisher.py"
-    output="screen"/>
+  
+  <include file="$(find range_sensor)/launch/sensor_info_publisher.launch">
+    <arg name="sim" value="$(arg sim)"/>
+  </include>
 
   <!-- Start the BoxHeightInformation publisher node (Assignment 1)-->
   <node name="box_height_metres" pkg="range_sensor" type="assignment1.py"
